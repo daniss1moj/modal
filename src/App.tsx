@@ -1,26 +1,72 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+	Card,
+	Typography,
+	IconButton,
+	ThemeProvider,
+	Box,
+	Divider,
+	InputBase,
+	FormControl,
+	InputLabel,
+	FormHelperText,
+} from "@mui/material";
+import theme from "./theme";
+import EditIcon from "./assets/EditIcon";
+import { useState } from "react";
+import SecurityPreferencesModal from "./components/SecurityPreferencesModal";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const handleOpenModal = () => {
+		setIsModalOpen(true);
+	};
+
+	const handleCloseModal = () => {
+		setIsModalOpen(false);
+	};
+
+	return (
+		<ThemeProvider theme={theme}>
+			<Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+				<Box
+					sx={{
+						maxWidth: 785,
+						width: "100%",
+						padding: "40px",
+						display: "flex",
+						flexDirection: "column",
+						gap: "24px",
+						background: "#FFFFFF",
+						borderRadius: "16px",
+					}}>
+					<Box display="flex" justifyContent="space-between">
+						<Typography
+							sx={{
+								fontWeight: 600,
+								fontSize: "20px",
+								lineHeight: "28px",
+								color: "#151B26",
+							}}>
+							Security Preferences
+						</Typography>
+						<IconButton onClick={handleOpenModal}>
+							<EditIcon />
+						</IconButton>
+					</Box>
+					<Box padding="16px">
+						<Divider />
+						<Box display="flex" justifyContent="space-between" marginY="16px">
+							<Typography className="label">Password</Typography>
+							<Typography className="label">*******</Typography>
+						</Box>
+						<Divider />
+					</Box>
+				</Box>
+			</Box>
+			<SecurityPreferencesModal open={isModalOpen} onClose={handleCloseModal} />
+		</ThemeProvider>
+	);
 }
 
 export default App;
